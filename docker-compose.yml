@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+
+  # admin_forntend:
+  #   image: admin/ui
+  #   container_name: admin_frontend
+  #   ports: 
+  #     - 8080:80
+  #   restart: unless-stopped
+  database:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes: 
+      - ./data:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d
+    restart: unless-stopped
+  admin_backend:
+    image: admin/management:1.0.0
+    container_name: admin_backend
+    ports:
+      - 8888:8888
+    volumes:
+      - $PWD/logs:/logs
+    restart: unless-stopped
+
+networks:
+  default:
